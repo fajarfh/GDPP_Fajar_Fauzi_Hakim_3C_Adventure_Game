@@ -7,6 +7,8 @@ public class InputManager : MonoBehaviour
 {
 
     public Action<Vector2> onMoveInput;
+    public Action<Boolean> onSprintInput;
+    public Action onJumpInput;
 
     private void Update()
     {
@@ -34,10 +36,8 @@ public class InputManager : MonoBehaviour
 
         Vector2 inputAxis = new Vector2(horizontalAxis, verticalAxis);
 
-        if (inputAxis.magnitude > 0)
-        {
-            onMoveInput?.Invoke(inputAxis);
-        }
+        onMoveInput?.Invoke(inputAxis);
+        
     }
 
     private void CheckSprintInput()
@@ -47,10 +47,12 @@ public class InputManager : MonoBehaviour
         if (isHoldSprintInput)
         {
             Debug.Log("Sprinting");
+            onSprintInput?.Invoke(true);
         }
         else
         {
             Debug.Log("Not Sprinting");
+            onSprintInput?.Invoke(false);
         }
     }
 
@@ -61,6 +63,7 @@ public class InputManager : MonoBehaviour
         if (isPressJumpInput)
         {
             Debug.Log("Jump");
+            onJumpInput?.Invoke();
         }
     }
 
