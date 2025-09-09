@@ -9,6 +9,8 @@ public class InputManager : MonoBehaviour
     public Action<Vector2> onMoveInput;
     public Action<Boolean> onSprintInput;
     public Action onJumpInput;
+    public Action onClimbInput;
+    public Action onCancelInput;
 
     private void Update()
     {
@@ -94,6 +96,7 @@ public class InputManager : MonoBehaviour
         if (isPressClimbInput)
         {
             Debug.Log("Climb");
+            onClimbInput?.Invoke();
         }
     }
 
@@ -114,6 +117,7 @@ public class InputManager : MonoBehaviour
         if (isPressCancelInput)
         {
             Debug.Log("Cancel Climb or Glide");
+            onCancelInput?.Invoke();
         }
     }
 
