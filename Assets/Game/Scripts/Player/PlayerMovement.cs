@@ -35,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float _climbSpeed;
 
+    [SerializeField] private Transform _cameraTransform;
+
     private PlayerStance _playerStance;
 
     private Rigidbody _rigidbody;
@@ -44,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _speed = _walkSpeed;
         _playerStance = PlayerStance.Stand;
+        HideAndLockCursor();
     }
 
     //Jangan lakukan subscribe di dalam method Awake karena pada method tersebut belum tentu object InputManager telah diload,
@@ -93,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (axisDirection.magnitude >= 0.1)
             {
-                float rotationAngle = Mathf.Atan2(axisDirection.x, axisDirection.y) * Mathf.Rad2Deg;
+                float rotationAngle = Mathf.Atan2(axisDirection.x, axisDirection.y) * Mathf.Rad2Deg + _cameraTransform.eulerAngles.y;
                 float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotationAngle, ref _rotationSmoothVelocity, _rotationSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
                 movementDirection = Quaternion.Euler(0f, rotationAngle, 0f) * Vector3.forward;
@@ -186,6 +189,12 @@ public class PlayerMovement : MonoBehaviour
             _rigidbody.useGravity = true;
             transform.position -= transform.forward * 0.5f;
         }
+    }
+
+    private void HideAndLockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
 }
