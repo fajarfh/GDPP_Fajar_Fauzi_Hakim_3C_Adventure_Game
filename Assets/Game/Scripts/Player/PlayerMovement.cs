@@ -63,6 +63,9 @@ public class PlayerMovement : MonoBehaviour
     private int _combo = 0;
     private Coroutine _resetCombo;
 
+    [Header("Audio Settings")]
+    [SerializeField] private PlayerAudioManager _playerAudioManager;
+
     [Header("Camera Settings")]
 
     [SerializeField] private Transform _cameraTransform;
@@ -342,6 +345,7 @@ public class PlayerMovement : MonoBehaviour
             _playerStance = PlayerStance.Glide;
             _animator.SetBool("IsGliding", true);
             _cameraManager.SetFPSClampedCamera(true, transform.rotation.eulerAngles);
+            _playerAudioManager.PlayGlideSfx();
         }
     }
 
@@ -352,6 +356,7 @@ public class PlayerMovement : MonoBehaviour
             _playerStance = PlayerStance.Stand;
             _animator.SetBool("IsGliding", false);
             _cameraManager.SetFPSClampedCamera(false, transform.rotation.eulerAngles);
+            _playerAudioManager.StopGlideSfx();
         }
     }
 
