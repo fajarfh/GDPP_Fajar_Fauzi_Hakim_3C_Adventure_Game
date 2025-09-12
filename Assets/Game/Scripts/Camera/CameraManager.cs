@@ -1,7 +1,9 @@
+using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
-using Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
@@ -9,6 +11,8 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _fpsCamera;
     [SerializeField] private CinemachineFreeLook _tpsCamera;
     [SerializeField] private InputManager _inputManager;
+
+    public Action onChangePerspective;
 
     public void Start()
     {
@@ -44,14 +48,20 @@ public class CameraManager : MonoBehaviour
         {
             cameraState = CameraState.FirstPerson;
             _tpsCamera.gameObject.SetActive(false);
+            //_tpsCamera.Priority = 10;
             _fpsCamera.gameObject.SetActive(true);
+            //_fpsCamera.Priority = 20;
         }
         else
         {
             cameraState = CameraState.ThirdPerson;
             _tpsCamera.gameObject.SetActive(true);
+            //_tpsCamera.Priority = 20;
             _fpsCamera.gameObject.SetActive(false);
+            //_fpsCamera.Priority = 10;
+
         }
+        onChangePerspective?.Invoke();
     }
 
     public void SetTPSFieldOfView(float fieldOfView)
