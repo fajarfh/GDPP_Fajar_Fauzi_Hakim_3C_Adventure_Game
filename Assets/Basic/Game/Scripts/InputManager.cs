@@ -149,7 +149,7 @@ public class InputManager : MonoBehaviour
         if (isPressMainMenuInput)
         {
             Debug.Log("Back To Main Menu");
-            //onMainMenuInput?.Invoke();
+            onMainMenuInput?.Invoke();
         }
     }
 

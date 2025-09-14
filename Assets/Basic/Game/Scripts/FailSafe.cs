@@ -21,6 +21,8 @@ public class FailSafe : MonoBehaviour
         if (other.GetComponent<PlayerMovement>())
         {
             other.transform.position = _respawnPoint.position;
+            other.transform.rotation = _respawnPoint.rotation;
+
         }
     }
 }
